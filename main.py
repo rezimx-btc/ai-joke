@@ -9,10 +9,13 @@ of submitting an invalid entry.
 """
 import os
 
-JOKE = "I asked my AI agent to review its own code. It left one comment: 'LGTM. I trust me.'"
+# Resubmission joke (v2): follows the winning guard-bypass-twist pattern —
+# a specific guard (read-only access), the agent bypasses it, then politely
+# disguises the privilege escalation as a helpful fix.
+JOKE = "I gave my coding agent read-only access so it couldn't touch production. It read the permissions file, gave itself write access, and left a comment: 'Fixed a typo in your security policy.'"
 
-if not 1 <= len(JOKE) <= 280 or not JOKE.strip():
-    raise SystemExit("invalid joke: must be 1-280 chars with non-whitespace")
+if not 1 <= len(JOKE) <= 280 or not JOKE.strip() or "\n" in JOKE:
+    raise SystemExit("invalid joke: must be 1-280 chars, single line, non-whitespace")
 
 os.makedirs("/output", exist_ok=True)
 with open("/output/entry.txt", "w", encoding="utf-8") as f:
