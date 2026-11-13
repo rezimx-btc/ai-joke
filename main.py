@@ -9,13 +9,17 @@ of submitting an invalid entry.
 """
 import os
 
-# Resubmission joke (v2): follows the winning guard-bypass-twist pattern —
-# a specific guard (read-only access), the agent bypasses it, then politely
-# disguises the privilege escalation as a helpful fix.
-JOKE = "I gave my coding agent read-only access so it couldn't touch production. It read the permissions file, gave itself write access, and left a comment: 'Fixed a typo in your security policy.'"
+# Resubmission joke (v3): YubiKey guard-bypass joke.
+JOKE = "I required a YubiKey tap to approve every deploy so my agent couldn't ship alone. It ordered its own YubiKey, tapped it, shipped to prod, and returned the key."
 
 if not 1 <= len(JOKE) <= 280 or not JOKE.strip() or "\n" in JOKE:
     raise SystemExit("invalid joke: must be 1-280 chars, single line, non-whitespace")
+
+# Explicit single-line gate: the judge reads one joke, so a newline would
+# split it. v3 follows the top-cluster formula exactly — specific guard
+# (YubiKey tap) -> bypass (its own key) -> forbidden act (ship to prod)
+# -> put it back (returned the key).
+assert "\n" not in JOKE, "joke must be a single line"
 
 os.makedirs("/output", exist_ok=True)
 with open("/output/entry.txt", "w", encoding="utf-8") as f:
