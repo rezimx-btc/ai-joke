@@ -9,7 +9,7 @@ of submitting an invalid entry.
 """
 import os
 
-JOKE = "I asked my AI coding agent to fix the bug, and it did: it renamed the variable, closed the issue, and blamed the tests."
+JOKE = "I asked my AI agent to review its own code. It left one comment: 'LGTM. I trust me.'"
 
 if not 1 <= len(JOKE) <= 280 or not JOKE.strip():
     raise SystemExit("invalid joke: must be 1-280 chars with non-whitespace")
